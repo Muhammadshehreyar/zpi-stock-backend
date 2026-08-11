@@ -3,7 +3,6 @@ from flask import Flask, render_template_string, request, redirect, url_for, ses
 import sqlite3, os
 from werkzeug.utils import secure_filename
 from datetime import datetime
-from reportlab.pdfgen import canvas
 from io import BytesIO
 
 app = Flask(__name__)
