@@ -2,4 +2,4 @@ Flask
 flask_cors
 gunicorn
 yfinance
-reportlab
+reportlab==4.0.9
