@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template_string, request, redirect, url_for, session, make_response
 import sqlite3, os
 from werkzeug.utils import secure_filename
@@ -147,4 +148,6 @@ def pdf():
 @app.route('/logout')
 def out(): session.clear(); return redirect('/')
 
-if __name__=="__main__": app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
