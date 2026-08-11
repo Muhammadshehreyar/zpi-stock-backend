@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import yfinance as yf
 
 app = FastAPI()
 
-# CORS allow kar do taake frontend connect ho sake
+# CORS allow
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -18,4 +19,17 @@ def read_root():
 
 @app.get("/stocks/{symbol}")
 def get_stock(symbol: str):
-    return {"symbol": symbol, "price": "Test Data"}
+    try:
+        stock = yf.Ticker(symbol)
+        data = stock.info
+        price = data.get('currentPrice', data.get('regularMarketPrice', 0))
+        name = data.get('shortName', symbol)
+        
+        return {
+            "symbol": symbol.upper(),
+            "name": name,
+            "price": price,
+            "currency": data.get('currency', 'USD')
+        }
+    except:
+        return {"error": "Stock not found"}
