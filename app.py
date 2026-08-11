@@ -4,8 +4,9 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 from reportlab.pdfgen import canvas
 from io import BytesIO
-
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 app.secret_key = "zpi_pro_2026"
 UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -146,5 +147,13 @@ def pdf():
 
 @app.route('/logout')
 def out(): session.clear(); return redirect('/')
+    @app.route('/')
+def home():
+    return "ZPI Backend is Running ✅"
 
-if __name__=="__main__": app.run(debug=True)
+@app.route('/stocks')
+def stocks():
+    return []
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
